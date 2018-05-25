@@ -15,7 +15,12 @@ public class HelloWorldClient {
 		
 		User user = new User();
 		user.setAge("13");
-		user.setDesc("I am a demo");
+		//将会导致数据错乱
+		//String类型底层的结构是char[] 数组类型。并且char[]数组底层保存byte是按照Unicode的形式来的
+		//但是getBytes的方法会按照当前的默认类型来把Unicode类型byte进行转码取出
+		//再次使用byte建立一个string类型，已经相当于是一种转型了。把Unicode字符串 转换成 了已给cp1252字符串。
+		//但是Unicode的一些字符，没法完全支持，导致出现问号
+		user.setDesc(new String("MySQL从删库到跑路".getBytes()));
 		user.setID("3344");
 		user.setName("SB");
 		
